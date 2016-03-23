@@ -9,6 +9,16 @@ device = usb.core.find(idVendor=VENDOR_ID,
                        idProduct=PRODUCT_ID)
 
 # use the first/default configuration
+ if device is None:
+    raise ValueError('Device not found')
+else:
+    print ("meteo megvan!")
+
+reattach = False
+if device.is_kernel_driver_active(0):
+    reattach = True
+    dev.detach_kernel_driver(0)
+
 device.set_configuration()
 # first endpoint
 endpoint = device[0][(0,0)][0]
